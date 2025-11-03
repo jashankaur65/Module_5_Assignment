@@ -40,3 +40,16 @@ form.addEventListener("submit", async (e) => {
     statusEl.textContent = "Error fetching data.";
   }
 });
+async function fetchTrees(commonName) {
+  const url = `https://data.winnipeg.ca/resource/d3jk-hb6j.json?$where=lower(common_name) LIKE lower('%${commonName}%')&$order=diameter_at_breast_height DESC&$limit=100`;
+  const encodedURL = encodeURI(url);
+  try {
+    const res = await fetch(encodedURL);
+    if (!res.ok) throw new Error("Network response not ok");
+    const data = await res.json();
+    return data;
+  } catch (err) {
+    console.error(err);
+    throw err;
+  }
+}
