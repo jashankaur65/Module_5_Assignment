@@ -27,3 +27,16 @@ function displayData(data) {
   table += "</table>";
   results.innerHTML = table;
 }
+form.addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const name = input.value.trim();
+  if (!name) return;
+  statusEl.textContent = "Loading...";
+  try {
+    const data = await fetchTrees(name);
+    displayData(data);
+    statusEl.textContent = `Found ${data.length} results.`;
+  } catch (error) {
+    statusEl.textContent = "Error fetching data.";
+  }
+});
