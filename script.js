@@ -10,3 +10,20 @@ async function fetchTrees(commonName) {
   const data = await res.json();
   return data;
 }
+function displayData(data) {
+  if (data.length === 0) {
+    results.innerHTML = "<p>No results found.</p>";
+    return;
+  }
+
+  let table = "<table><tr><th>Common Name</th><th>Botanical Name</th><th>Diameter</th></tr>";
+  data.forEach(item => {
+    table += `<tr>
+      <td>${item.common_name || ""}</td>
+      <td>${item.botanical_name || ""}</td>
+      <td>${item.diameter_at_breast_height || ""}</td>
+    </tr>`;
+  });
+  table += "</table>";
+  results.innerHTML = table;
+}
